@@ -81,10 +81,10 @@
       "requiresFlask": true,
       "flaskConfig": {
         "appPath": "exskilence_project/app.py",
-        "port": 5000,
+        "port": 4000,
         "startupTimeout": 15000
       },
-      "baseUrl": "http://localhost:5000",
+      "baseUrl": "http://localhost:4000",
       "tests": [
         {
           "isMandatory": true,
