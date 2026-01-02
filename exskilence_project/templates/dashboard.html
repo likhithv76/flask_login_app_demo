@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html>
-<head><title>Dashboard</title></head>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
 <body>
-<h2>Welcome, {{ user }}</h2>
-<a href="/logout">Logout</a>
+<div class="dashboard-container">
+    <h1>Dashboard</h1>
+    <h2>Welcome, {{ user }}</h2>
+    <a href="/logout">Logout</a>
+</div>
 </body>
 </html>

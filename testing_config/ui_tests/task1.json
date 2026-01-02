@@ -133,13 +133,17 @@
             },
             {
               "type": "wait",
-              "duration": 2000
+              "duration": 3000
             }
           ],
           "assertions": [
             {
               "type": "url",
               "value": "/"
+            },
+            {
+              "type": "visible",
+              "selector": "form"
             },
             {
               "type": "contains",
@@ -170,7 +174,7 @@
             },
             {
               "type": "wait",
-              "duration": 2000
+              "duration": 3000
             }
           ],
           "assertions": [
@@ -181,6 +185,11 @@
             {
               "type": "visible",
               "selector": "body"
+            },
+            {
+              "type": "contains",
+              "selector": "body",
+              "text": "Welcome"
             }
           ]
         }
