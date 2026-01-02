@@ -1,0 +1,198 @@
+{
+  "id": "task1",
+  "validation": {
+    "minScore": 70,
+    "static": {
+      "required": true,
+      "html": {
+        "isMandatory": true,
+        "rules": [
+          {
+            "file": "templates/login.html",
+            "requiredElements": ["form", "input", "button"]
+          },
+          {
+            "file": "templates/dashboard.html",
+            "requiredElements": ["h1", "h2", "div", "a"]
+          }
+        ]
+      },
+      "css": {
+        "isMandatory": true,
+        "rules": [
+          {
+            "file": "static/style.css",
+            "requiredSelectors": [".container", ".form-group", "button"]
+          }
+        ]
+      }
+    },
+    "schema": {
+      "file": "exskilence_project/app.py",
+      "tables": {
+        "users": {
+          "isMandatory": true,
+          "columns": {
+            "id": {
+              "column": "id",
+              "type": "integer",
+              "autoIncrement": true,
+              "primaryKey": true
+            },
+            "username": {
+              "type": "varchar",
+              "length": 100,
+              "required": true,
+              "unique": true
+            },
+            "password": {
+              "type": "varchar",
+              "length": 255,
+              "required": true
+            }
+          }
+        }
+      },
+      "inserts": {
+        "isMandatory": true,
+        "users": [
+          {
+            "columns": ["username", "password"],
+            "data": {
+              "username": "admin",
+              "password": "admin123"
+            }
+          }
+        ]
+      },
+      "selects": {
+        "users": [
+          {
+            "columns": ["COUNT(*)"],
+            "where": ""
+          }
+        ]
+      },
+      "updates": {},
+      "deletes": {}
+    },
+    "dynamic": {
+      "required": true,
+      "requiresFlask": true,
+      "flaskConfig": {
+        "appPath": "exskilence_project/app.py",
+        "port": 5000,
+        "startupTimeout": 15000
+      },
+      "baseUrl": "http://localhost:5000",
+      "tests": [
+        {
+          "isMandatory": true,
+          "name": "Login page loads correctly",
+          "path": "/",
+          "captureScreenshot": true,
+          "actions": [],
+          "assertions": [
+            {
+              "type": "visible",
+              "selector": "form"
+            },
+            {
+              "type": "exists",
+              "selector": "input[name='username']"
+            },
+            {
+              "type": "exists",
+              "selector": "input[name='password']"
+            },
+            {
+              "type": "exists",
+              "selector": "button[type='submit']"
+            }
+          ]
+        },
+        {
+          "isMandatory": true,
+          "name": "Invalid login shows error message",
+          "path": "/",
+          "captureScreenshot": true,
+          "actions": [
+            {
+              "type": "fill",
+              "selector": "input[name='username']",
+              "value": "wronguser"
+            },
+            {
+              "type": "fill",
+              "selector": "input[name='password']",
+              "value": "wrongpass"
+            },
+            {
+              "type": "click",
+              "selector": "button[type='submit']"
+            },
+            {
+              "type": "wait",
+              "duration": 2000
+            }
+          ],
+          "assertions": [
+            {
+              "type": "url",
+              "value": "/"
+            },
+            {
+              "type": "contains",
+              "selector": "body",
+              "text": "Invalid"
+            }
+          ]
+        },
+        {
+          "isMandatory": true,
+          "name": "Valid login redirects to dashboard",
+          "path": "/",
+          "captureScreenshot": true,
+          "actions": [
+            {
+              "type": "fill",
+              "selector": "input[name='username']",
+              "value": "admin"
+            },
+            {
+              "type": "fill",
+              "selector": "input[name='password']",
+              "value": "admin123"
+            },
+            {
+              "type": "click",
+              "selector": "button[type='submit']"
+            },
+            {
+              "type": "wait",
+              "duration": 2000
+            }
+          ],
+          "assertions": [
+            {
+              "type": "url",
+              "value": "/dashboard"
+            },
+            {
+              "type": "visible",
+              "selector": "body"
+            }
+          ]
+        }
+      ]
+    },
+    "pytest": {
+      "required": true,
+      "testFile": [
+        "testing_config/py_tests/task1.py"
+      ],
+      "requiresFlask": false,
+      "timeout": 30000
+    }
+  }
+}
